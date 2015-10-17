@@ -100,30 +100,28 @@ class CreateSchema < ActiveRecord::Migration
     
     
     create_table :kg_gallery_objects do |t|
-      t.references :object_type_id, :null => false
+      t.references :object_type, :null => false
       t.string     :shortname, :unique => true
       t.string     :name
       t.text       :description
-      t.references :file_id
-      t.references :author_id
+      t.references :file
+      t.references :author
       t.text       :note
       t.jsonb      :groupings,  null: false, default: '{}'
       t.jsonb      :attributes, null: false, default: '{}'
       
       t.timestamps
     end
-    add_index :kg_gallery_objects, :object_type
     add_index :kg_gallery_objects, :shortname
     add_index :kg_gallery_objects, :name
     add_index :kg_gallery_objects, :description
-    add_index :kg_gallery_objects, :file_id
-    add_index :kg_gallery_objects, :author_id
     add_index :kg_gallery_objects, :groupings,  :using => :gin
     add_index :kg_gallery_objects, :attributes, :using => :gin
 
     
     create_table :kg_gallery_files do |t|
       t.attachment :file
+      t.string     :shortname
       t.string     :original_filename
       t.string     :filetype
       t.string     :version

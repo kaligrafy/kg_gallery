@@ -15,122 +15,15 @@ ActiveRecord::Schema.define(version: 20130923212809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
   enable_extension "postgis"
-
-  create_table "kg_gallery_attribute_choices", force: :cascade do |t|
-    t.string  "attribute_sn",                                                       null: false
-    t.string  "shortname",                                                          null: false
-    t.boolean "is_group",                                           default: false
-    t.string  "group_sn"
-    t.integer "sequence"
-    t.string  "internal_id"
-    t.string  "name"
-    t.text    "description"
-    t.float   "range_float_start_value"
-    t.float   "range_float_end_value"
-    t.integer "range_integer_start_value"
-    t.integer "range_integer_end_value"
-    t.decimal "range_money_start_value",   precision: 30, scale: 2
-    t.decimal "range_money_end_value",     precision: 30, scale: 2
-    t.text    "note"
-  end
-
-  add_index "kg_gallery_attribute_choices", ["attribute_sn"], name: "kggac_attribute_id", using: :btree
-  add_index "kg_gallery_attribute_choices", ["description"], name: "kggac_description", using: :btree
-  add_index "kg_gallery_attribute_choices", ["group_sn"], name: "kggac_group_id", using: :btree
-  add_index "kg_gallery_attribute_choices", ["internal_id"], name: "kggac_internal_id", using: :btree
-  add_index "kg_gallery_attribute_choices", ["is_group"], name: "kggac_is_group", using: :btree
-  add_index "kg_gallery_attribute_choices", ["name"], name: "kggac_name", using: :btree
-  add_index "kg_gallery_attribute_choices", ["range_float_end_value"], name: "kggac_range_float_end_value", using: :btree
-  add_index "kg_gallery_attribute_choices", ["range_float_start_value"], name: "kggac_range_float_start_value", using: :btree
-  add_index "kg_gallery_attribute_choices", ["range_integer_end_value"], name: "kggac_range_integer_end_value", using: :btree
-  add_index "kg_gallery_attribute_choices", ["range_integer_start_value"], name: "kggac_range_integer_start_value", using: :btree
-  add_index "kg_gallery_attribute_choices", ["range_money_end_value"], name: "kggac_range_money_end_value", using: :btree
-  add_index "kg_gallery_attribute_choices", ["range_money_start_value"], name: "kggac_range_money_start_value", using: :btree
-  add_index "kg_gallery_attribute_choices", ["sequence"], name: "kggac_sequence", using: :btree
-  add_index "kg_gallery_attribute_choices", ["shortname"], name: "kggac_shortname", using: :btree
-
-  create_table "kg_gallery_attribute_values", force: :cascade do |t|
-    t.string    "object_table_name",                                                                                            null: false
-    t.string    "object_class_name",                                                                                            null: false
-    t.integer   "object__id",                                                                                                   null: false
-    t.string    "attribute_sn",                                                                                                 null: false
-    t.string    "choice_sn"
-    t.string    "multiple_choices_sns",                                                                                                      array: true
-    t.string    "value_object_table_name"
-    t.string    "value_object_class_name"
-    t.integer   "value_object__id"
-    t.integer   "value_integer"
-    t.float     "value_float"
-    t.boolean   "value_boolean"
-    t.string    "value_string"
-    t.text      "value_text"
-    t.datetime  "value_datetime"
-    t.date      "value_date"
-    t.time      "value_time"
-    t.decimal   "value_money",                                                                         precision: 30, scale: 2
-    t.integer   "value_array_integer",                                                                                                       array: true
-    t.string    "value_array_string",                                                                                                        array: true
-    t.text      "value_array_text",                                                                                                          array: true
-    t.integer   "value_array_object__ids",                                                                                                   array: true
-    t.hstore    "value_hash"
-    t.text      "value_json"
-    t.geography "value_geography",         limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
-    t.text      "note"
-  end
-
-  add_index "kg_gallery_attribute_values", ["attribute_sn"], name: "kggav_attribute_sn", using: :btree
-  add_index "kg_gallery_attribute_values", ["choice_sn"], name: "kggav_choice_sn", using: :btree
-  add_index "kg_gallery_attribute_values", ["multiple_choices_sns"], name: "kggav_multiple_choices_sns", using: :gin
-  add_index "kg_gallery_attribute_values", ["object__id"], name: "kggav_object__id", using: :btree
-  add_index "kg_gallery_attribute_values", ["object_class_name"], name: "kggav_object_class_name", using: :btree
-  add_index "kg_gallery_attribute_values", ["object_table_name"], name: "kggav_object_table_name", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_array_integer"], name: "kggav_value_array_integer", using: :gin
-  add_index "kg_gallery_attribute_values", ["value_array_object__ids"], name: "kggav_value_array_object__ids", using: :gin
-  add_index "kg_gallery_attribute_values", ["value_array_string"], name: "kggav_value_array_string", using: :gin
-  add_index "kg_gallery_attribute_values", ["value_array_text"], name: "kggav_value_array_text", using: :gin
-  add_index "kg_gallery_attribute_values", ["value_boolean"], name: "kggav_value_boolean", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_date"], name: "kggav_value_date", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_datetime"], name: "kggav_value_datetime", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_float"], name: "kggav_value_float", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_geography"], name: "kggav_value_geography", using: :gist
-  add_index "kg_gallery_attribute_values", ["value_hash"], name: "kggav_value_hash", using: :gin
-  add_index "kg_gallery_attribute_values", ["value_integer"], name: "kggav_value_integer", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_json"], name: "kggav_value_json", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_money"], name: "kggav_value_money", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_object__id"], name: "kggav_value_object__id", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_object_class_name"], name: "kggav_value_object_class_name", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_object_table_name"], name: "kggav_value_object_table_name", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_string"], name: "kggav_value_string", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_text"], name: "kggav_value_text", using: :btree
-  add_index "kg_gallery_attribute_values", ["value_time"], name: "kggav_value_time", using: :btree
-
-  create_table "kg_gallery_attributes", force: :cascade do |t|
-    t.string  "shortname",                            null: false
-    t.string  "datatype",                             null: false
-    t.boolean "has_choices",          default: false
-    t.boolean "has_multiple_choices", default: false
-    t.string  "internal_id"
-    t.string  "name"
-    t.text    "description"
-    t.text    "note"
-  end
-
-  add_index "kg_gallery_attributes", ["datatype"], name: "kgga_datatype", using: :btree
-  add_index "kg_gallery_attributes", ["description"], name: "kgga_description", using: :btree
-  add_index "kg_gallery_attributes", ["has_choices"], name: "kgga_has_choices", using: :btree
-  add_index "kg_gallery_attributes", ["has_multiple_choices"], name: "kgga_has_multiple_choices", using: :btree
-  add_index "kg_gallery_attributes", ["internal_id"], name: "kgga_internal_id", using: :btree
-  add_index "kg_gallery_attributes", ["name"], name: "kgga_name", using: :btree
-  add_index "kg_gallery_attributes", ["shortname"], name: "kgga_shortname", unique: true, using: :btree
+  enable_extension "hstore"
 
   create_table "kg_gallery_files", force: :cascade do |t|
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
     t.string   "shortname"
-    t.string   "filename_file_name"
-    t.string   "filename_content_type"
-    t.integer  "filename_file_size"
-    t.datetime "filename_updated_at"
     t.string   "original_filename"
     t.string   "filetype"
     t.string   "version"
@@ -154,29 +47,48 @@ ActiveRecord::Schema.define(version: 20130923212809) do
   add_index "kg_gallery_files", ["version"], name: "kggf_version", using: :btree
 
   create_table "kg_gallery_objects", force: :cascade do |t|
-    t.string   "object_type_shortname", null: false
+    t.integer  "object_type_id",              null: false
     t.string   "shortname"
     t.string   "name"
     t.text     "description"
     t.integer  "file_id"
     t.integer  "author_id"
-    t.integer  "file_ids",                           array: true
-    t.integer  "author_ids",                         array: true
-    t.integer  "parent_ids",                         array: true
     t.text     "note"
+    t.jsonb    "groupings",      default: {}, null: false
+    t.jsonb    "attributes",     default: {}, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "kg_gallery_objects", ["author_id"], name: "kggo_author_id", using: :btree
-  add_index "kg_gallery_objects", ["author_ids"], name: "kggo_author_ids", using: :gin
-  add_index "kg_gallery_objects", ["description"], name: "kggo_description", using: :btree
-  add_index "kg_gallery_objects", ["file_id"], name: "kggo_file_id", using: :btree
-  add_index "kg_gallery_objects", ["file_ids"], name: "kggo_file_ids", using: :gin
-  add_index "kg_gallery_objects", ["name"], name: "kggo_name", using: :btree
-  add_index "kg_gallery_objects", ["object_type_shortname"], name: "kggo_object_type_shortname", using: :btree
-  add_index "kg_gallery_objects", ["parent_ids"], name: "kggo_parent_ids", using: :gin
-  add_index "kg_gallery_objects", ["shortname"], name: "kggo_shortname", using: :btree
+  add_index "kg_gallery_objects", ["attributes"], name: "index_kg_gallery_objects_on_attributes", using: :gin
+  add_index "kg_gallery_objects", ["description"], name: "index_kg_gallery_objects_on_description", using: :btree
+  add_index "kg_gallery_objects", ["groupings"], name: "index_kg_gallery_objects_on_groupings", using: :gin
+  add_index "kg_gallery_objects", ["name"], name: "index_kg_gallery_objects_on_name", using: :btree
+  add_index "kg_gallery_objects", ["shortname"], name: "index_kg_gallery_objects_on_shortname", using: :btree
+
+  create_table "kgg_attributes", force: :cascade do |t|
+    t.string "shortname",   null: false
+    t.string "datatype",    null: false
+    t.string "name"
+    t.text   "description"
+  end
+
+  add_index "kgg_attributes", ["datatype"], name: "index_kgg_attributes_on_datatype", using: :btree
+  add_index "kgg_attributes", ["name"], name: "index_kgg_attributes_on_name", using: :btree
+  add_index "kgg_attributes", ["shortname"], name: "index_kgg_attributes_on_shortname", unique: true, using: :btree
+
+  create_table "kgg_groupings", force: :cascade do |t|
+    t.string "shortname",                null: false
+    t.string "name"
+    t.text   "description"
+    t.jsonb  "groupings",   default: {}, null: false
+    t.jsonb  "attributes",  default: {}, null: false
+  end
+
+  add_index "kgg_groupings", ["attributes"], name: "index_kgg_groupings_on_attributes", using: :gin
+  add_index "kgg_groupings", ["groupings"], name: "index_kgg_groupings_on_groupings", using: :gin
+  add_index "kgg_groupings", ["name"], name: "index_kgg_groupings_on_name", using: :btree
+  add_index "kgg_groupings", ["shortname"], name: "index_kgg_groupings_on_shortname", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -207,11 +119,14 @@ ActiveRecord::Schema.define(version: 20130923212809) do
     t.boolean  "is_enabled"
     t.boolean  "is_valid"
     t.boolean  "is_test"
+    t.jsonb    "groupings",              default: {},    null: false
+    t.jsonb    "attributes",             default: {},    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "users", ["admin"], name: "index_users_on_admin", using: :btree
+  add_index "users", ["attributes"], name: "index_users_on_attributes", using: :gin
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["birthdate"], name: "index_users_on_birthdate", using: :btree
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -220,6 +135,7 @@ ActiveRecord::Schema.define(version: 20130923212809) do
   add_index "users", ["encrypted_password"], name: "index_users_on_encrypted_password", using: :btree
   add_index "users", ["failed_attempts"], name: "index_users_on_failed_attempts", using: :btree
   add_index "users", ["firstname"], name: "index_users_on_firstname", using: :btree
+  add_index "users", ["groupings"], name: "index_users_on_groupings", using: :gin
   add_index "users", ["initial"], name: "index_users_on_initial", using: :btree
   add_index "users", ["is_enabled"], name: "index_users_on_is_enabled", using: :btree
   add_index "users", ["is_test"], name: "index_users_on_is_test", using: :btree
