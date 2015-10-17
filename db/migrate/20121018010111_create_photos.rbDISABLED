@@ -1,0 +1,31 @@
+class CreatePhotos < ActiveRecord::Migration
+  def change
+    create_table :photos do |t|
+      t.text :titre
+      t.datetime :date
+      t.string :camera
+      t.float :ouverture
+      t.integer :distance_focale
+      t.string :vitesse
+      t.integer :sensibilite_iso
+      t.string :lentille
+      t.string :marque
+      t.point :emplacement
+      t.references :auteur
+      t.references :plante
+      t.references :variete
+      t.references :espece
+      t.attachment :nom_du_fichier
+      t.string :nom_original_du_fichier
+      t.text :notes
+      t.text :description
+      t.integer :appreciation
+
+      t.timestamps
+    end
+    add_index :photos, :plante_id
+    add_index :photos, :variete_id
+    add_index :photos, :espece_id
+    add_index :photos, :auteur_id
+  end
+end

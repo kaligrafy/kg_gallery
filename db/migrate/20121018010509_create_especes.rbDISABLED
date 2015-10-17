@@ -1,0 +1,17 @@
+class CreateEspeces < ActiveRecord::Migration
+  def change
+    create_table :especes do |t|
+      t.string :nom
+      t.references :plante
+      t.text :description
+      t.text :notes
+      t.text :noms_latins
+      t.text :noms_communs
+      t.text :noms_anglais
+      t.text :autres_noms
+
+      t.timestamps
+    end
+    add_index :especes, :plante_id
+  end
+end

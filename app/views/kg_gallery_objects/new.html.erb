@@ -1,0 +1,45 @@
+<h2><%= t(:new_object).capitalize_first_char %></h2>
+
+<%= form_for @kggo, url: kg_gallery_objects_path, :html => { :multipart => true } do |f| %>
+  <p>
+    <%= f.label :shortname %><br>
+    <%= f.text_field :shortname %>
+  </p>
+  
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+  
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </p>
+  
+  <p>
+    <%= f.label :object_type_shortname %><br>
+    <%= f.select :object_type_shortname, KgGalleryObject.object_types_for_select %>
+  </p>
+  
+  <% @kggas.each do |kgga_shortname, kgga| %>
+  <p>
+    <%= f.label kgga_shortname.to_sym %><br>
+    <% if kgga.has_choices %>
+      <%= f.collection_select kgga_shortname.to_sym, KgGalleryAttributeChoice.where(:attribute_sn => kgga_shortname.to_sym), :shortname, :name %>
+    <% else %>
+      <%= f.text_field kgga_shortname.to_sym %>
+    <% end %>
+  </p>
+  <% end %>
+  
+  <%= f.fields_for :file do |file_form| %>
+    <p>
+      <%= file_form.label :filename %>
+      <%= file_form.file_field :filename %>
+    </p>
+  <% end %>
+  
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

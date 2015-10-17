@@ -1,0 +1,4 @@
+class Famille < ActiveRecord::Base
+  belongs_to :plante
+  #attr_accessible :autres_noms, :description, :nom, :noms_anglais, :noms_communs, :noms_latins, :notes
+end

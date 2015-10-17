@@ -1,0 +1,10 @@
+<div class="line">
+  
+  <% @kggos.select{ |kggo| kggo.file && kggo.file.filename }.each do |kggo| %>
+  <div class="thumb">
+    <div class="photo" style="background: no-repeat center center url(<%= image_path kggo.file.filename.url(:thumb) %>) #0b0d11"><a href="<%= url_for(kg_gallery_object_path(:id => kggo.id)) %>" class="a_photo" title="Agrandir cette photo">&nbsp;</a></div>
+    <p class="p_photo"><span><a href="<%= url_for(kg_gallery_object_path(:id => kggo.id)) %>" class="s_a_photo" title="Agrandir cette photo"><%= kggo.name || kggo.file.filename_file_name %></a></span></p>
+  </div>
+  <% end %>
+  
+</div>

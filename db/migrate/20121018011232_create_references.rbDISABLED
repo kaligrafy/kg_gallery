@@ -1,0 +1,19 @@
+class CreateReferences < ActiveRecord::Migration
+  def change
+    create_table :references do |t|
+      t.text :titre
+      t.text :url
+      t.string :page
+      t.text :auteur
+      t.string :editeur
+      t.integer :annee
+      t.string :isbn
+      t.text :notes
+      t.text :description
+      t.references :plante
+      
+      t.timestamps
+    end
+    add_index :references, :plante_id
+  end
+end

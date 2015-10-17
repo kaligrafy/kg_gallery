@@ -1,0 +1,2 @@
+module KgGalleryObjectsHelper
+end

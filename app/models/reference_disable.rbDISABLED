@@ -1,0 +1,4 @@
+class Reference < ActiveRecord::Base
+  belongs_to :plante
+  #attr_accessible :annee, :auteur, :description, :editeur, :isbn, :notes, :page, :titre, :url
+end

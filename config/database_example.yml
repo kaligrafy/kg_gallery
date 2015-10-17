@@ -1,0 +1,9 @@
+development:
+  adapter: postgis
+  encoding: unicode
+  database: kg_gallery_<%= Rails.application.config.gallery_shortname %>_dev
+  pool: 5
+  username: USER
+  password: PASSWORD
+  schema_search_path: "<%= Rails.application.config.gallery_shortname %>,public"
+  script_dir: POSTGIS_SCRIPT_DIR_PATH

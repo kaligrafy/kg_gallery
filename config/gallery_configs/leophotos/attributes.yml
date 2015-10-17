@@ -1,0 +1,21 @@
+# do not use these attribute names: id, shortname, name, name_translations, description, description_translations, url, url_translations, filename, original_filename, filetype, object_type_shortname, version, note, file_ids, author_ids, parent_ids, created_at, updated_at, email, encrypted_password, password, password_confirmation, username, login, reset_password_token, reset_password_sent_at, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, confirmation_token, confirmed_at, confirmation_sent_at, unconfirmed_email, failed_attempts, unlock_token, locked_at, authentication_token, phone, admin, firstname, lastname, initial, birthdate, is_enabled, enabled, is_valid, valid, is_test, attribute, attributes, attribute_value_objects, create_attribute_value, attribute_value_object, attribute_value, attribute_values or any ruby/rails/active_record method
+# use a prefix for all attributes if possible
+attributes:
+  creation_date:
+    name: Date de prise de vue
+    datatype: datetime
+  album:
+    name: Album
+    datatype: string
+    has_choices: true
+    #choices:
+    #  photo:
+    #    name:
+    #      fr: Photo
+    #      en: Picture
+    #    sequence: 1000
+    #  video:
+    #    name:
+    #      fr: Vidéo
+    #      en: Video
+    #    sequence: 2000

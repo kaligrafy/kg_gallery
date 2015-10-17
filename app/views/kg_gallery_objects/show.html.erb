@@ -1,0 +1,82 @@
+
+
+    <div class="frame">
+      <div class="d_browse_legend">
+        <div class="d_browse_nav">
+          <p class="hide"><img src="<%= image_path("browse_empty_icon.gif") %>" alt="*" />&nbsp;<a href="?img=17&amp;line=2&amp;album=225&amp;id=5086" title="Photo précédente" class="a_albums_back"><img src="<%= image_path("browse_prev_arrow.gif") %>" /></a>&nbsp;&nbsp;&nbsp;&nbsp;1 / 18&nbsp;&nbsp;&nbsp;&nbsp;<a href="?img=1&amp;line=2&amp;album=225&amp;id=5092" title="Photo suivante" class="a_albums_back"><img src="<%= image_path("browse_next_arrow.gif") %>" /></a>&nbsp;<a href="?img=17&amp;line=2&amp;album=225&amp;id=5086" title="Dernière photo" class="a_albums_back"><img src="<%= image_path("browse_last_arrow.gif") %>" /></a></p>
+        </div>
+        <div class="d_clear"></div>
+      </div>
+      <% if @kggo.file %><div class="browse_photo"><a href="" class="a_frame_image"><img id="object_main_image" src="<%= @kggo.file.filename.url(:large) %>" alt="*" /></a></div><% end %>
+      <h2 class="h_browse_title"><%= @kggo.name %></h2>
+    </div>
+    <div class="d_browse_caption">
+      <!-- <dl class="dl_download">
+        <dt class="dt_download"><a href="" title="" class="a_download">Télécharger l&#8217;original</a></dt>
+        <dd class="dd_download">Document JPG 533 X 800 pixels</dd>
+      </dl> -->
+    </div>
+    
+  </div>
+</div> <!-- Container End -->
+
+<hr class="hidden" />
+
+<!-- Footer -->
+<div id="footer">
+  <div id="ornement_bottom"></div>
+  <div class="d_info" style="width: 876px;">
+  	<table class="t_info" style="width: 487px;">
+  		<tr class="tr_author">
+  			<th>Auteur</th><td>Pierre-Léo Bourbonnais</td>
+  		</tr>
+  		<tr class="tr_date">
+  		  <th>Date et heure</th><td>2013.05.01 07:25:12</td>
+  	  </tr>
+	
+  	  <tr>
+  	  	<th>ID</th><td>2013_05_01__MG_8603</td>
+  	  </tr>
+  	  	<tr>
+  	  	<th>Caméra</th><td>Canon EOS 7D</td>
+  	  </tr>
+  	  			<tr>
+  	  	<th>Exposition</th><td>1/2000 s</td>
+  	  </tr>
+  	  		<tr>
+  	  	<th>Sensibilité ISO</th><td>400</td>
+  	  </tr>
+  	  		<tr>
+  	  	<th>Longueur focale</th><td>200 mm</td>
+  	  </tr>
+  	  		<tr>
+  	  	<th>Profondeur de champ</th><td>f5.6</td>
+  	  </tr>
+  	</table>
+  	<div class="d_info_left" style="width: 351px;">
+  		<div class="d_star_rating" style="width: 65px;">
+  			<ul class="ul_star_rating">
+  				<li class="current-rating" style="width: 13px;">1</li>
+  				<li><a href="?img=1&line=2&album=224&amp;rating=1" title="1" class="one-star">1</a></li>
+  				<li><a href="?img=1&line=2&album=224&amp;rating=2" title="2" class="two-stars">2</a></li>
+  				<li><a href="?img=1&line=2&album=224&amp;rating=3" title="3" class="three-stars">3</a></li>
+  				<li><a href="?img=1&line=2&album=224&amp;rating=4" title="4" class="four-stars">4</a></li>
+  				<li><a href="?img=1&line=2&album=224&amp;rating=5" title="5" class="five-stars">5</a></li>
+  			</ul>
+  			<p style="text-align: right; padding-top: 0.2em;">1&nbsp;/&nbsp;5<br /><em>1 vote</em></p>
+  		</div>
+  		<h3>Grèce</h3>
+		
+  		<h4>Litochoron, <em>Thessalie</em></h4>
+  		<dl>
+  			<dt>Mots clés</dt>
+  			<dd>montagne, mont, olympe.</dd>
+  			<dt>Thèmes</dt>
+  			<dd><a href="themes.php?id=13" class="a_browse_themes">Paysage</a> &#8212; <a href="themes.php?id=1" class="a_browse_themes">Voyage</a></dd>
+  		</dl>
+  	</div>
+  </div>
+  <p class="f_copyright oblique">MIT License</p>
+  <div class="clear"></div>
+</div>
+<!-- Footer End -->

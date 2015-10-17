@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KgGallery</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="robots" content="all" />
+  <link rel="Shortcut Icon" type="image/ico" href="" />
+  <script type="text/javascript">
+    (function() {
+      var config = {
+        kitId: 'ish2tav',
+        scriptTimeout: 3000
+      };
+      var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+    })();
+  </script>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div id="header_container">
+  
+  <!-- Header -->
+  <div id="header">
+    <a name="top" id="top"></a>
+    <h1><span class="hidden"></span></h1>
+  </div>
+  <!-- Header End-->
+  
+</div>
+
+<hr class="hidden" />
+
+<div id="container">
+    
+  <!-- Navigation -->
+  <div id="menu">
+    
+    <ul id="main_menu">
+      <li><a href="<%= url_for(root_path) %>">Accueil</a></li>
+      
+    </ul>
+    
+    <ul id="right_menu">
+      <li><a href="" title="">Login</a></li>
+      
+    </ul>
+    
+    <div class="clear"></div>
+    
+  </div>
+  
+  <div id="n_bottom"></div>
+  <!-- Navigation End -->
+
+  <hr class="hidden" />
+  <div id="ornement_top"></div>
+  <div id="content">
+
+  <%= yield %>
+  
+  </div>
+</div> <!-- Container End -->
+
+<hr class="hidden" />
+
+<!-- Footer -->
+<div id="footer">
+  <div id="ornement_bottom"></div>
+  <div class="clear"></div>
+</div>
+<!-- Footer End -->
+
+</body>
+</html>

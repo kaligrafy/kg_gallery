@@ -1,0 +1,10 @@
+class CreatePhotoAuteurs < ActiveRecord::Migration
+  def change
+    create_table :photo_auteurs do |t|
+      t.string :prenom
+      t.string :nom
+
+      t.timestamps
+    end
+  end
+end

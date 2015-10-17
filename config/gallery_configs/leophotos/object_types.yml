@@ -1,0 +1,16 @@
+object_types:
+  #album:
+  #  name: Album
+  #  attributes:
+  #    name: ~
+  #    description: ~
+  photo:
+    name: Photo
+    attributes:
+      album: ~    
+  video:
+    name: Vidéo
+    attributes: ~
+  
+  #plant:
+  #  name: "Plant/Plante"
