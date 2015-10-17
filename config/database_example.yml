@@ -1,4 +1,5 @@
 development:
+  host: localhost
   adapter: postgis
   encoding: unicode
   database: kg_gallery_<%= Rails.application.config.gallery_shortname %>_dev
