@@ -17,65 +17,54 @@ ActiveRecord::Schema.define(version: 20130923212809) do
   enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "hstore"
-
-  create_table "kg_gallery_files", force: :cascade do |t|
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
-    t.string   "shortname"
-    t.string   "original_filename"
-    t.string   "filetype"
-    t.string   "version"
-    t.string   "name"
-    t.text     "description"
-    t.text     "url"
-    t.text     "note"
-    t.datetime "creation_date"
-    t.hstore   "exif"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "kg_gallery_files", ["creation_date"], name: "kggf_creation_date", using: :btree
-  add_index "kg_gallery_files", ["description"], name: "kggf_description", using: :btree
-  add_index "kg_gallery_files", ["filetype"], name: "kggf_filetype", using: :btree
-  add_index "kg_gallery_files", ["name"], name: "kggf_name", using: :btree
-  add_index "kg_gallery_files", ["original_filename"], name: "kggf_original_filename", using: :btree
-  add_index "kg_gallery_files", ["shortname"], name: "kggf_shortname", using: :btree
-  add_index "kg_gallery_files", ["url"], name: "kggf_url", using: :btree
-  add_index "kg_gallery_files", ["version"], name: "kggf_version", using: :btree
-
-  create_table "kg_gallery_objects", force: :cascade do |t|
-    t.integer  "object_type_id",              null: false
-    t.string   "shortname"
-    t.string   "name"
-    t.text     "description"
-    t.integer  "file_id"
-    t.integer  "author_id"
-    t.text     "note"
-    t.jsonb    "groupings",      default: {}, null: false
-    t.jsonb    "attributes",     default: {}, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "kg_gallery_objects", ["attributes"], name: "index_kg_gallery_objects_on_attributes", using: :gin
-  add_index "kg_gallery_objects", ["description"], name: "index_kg_gallery_objects_on_description", using: :btree
-  add_index "kg_gallery_objects", ["groupings"], name: "index_kg_gallery_objects_on_groupings", using: :gin
-  add_index "kg_gallery_objects", ["name"], name: "index_kg_gallery_objects_on_name", using: :btree
-  add_index "kg_gallery_objects", ["shortname"], name: "index_kg_gallery_objects_on_shortname", using: :btree
+  enable_extension "uuid-ossp"
 
   create_table "kgg_attributes", force: :cascade do |t|
     t.string "shortname",   null: false
-    t.string "datatype",    null: false
     t.string "name"
     t.text   "description"
+    t.string "datatype",    null: false
+    t.string "units"
+    t.string "format"
   end
 
-  add_index "kgg_attributes", ["datatype"], name: "index_kgg_attributes_on_datatype", using: :btree
-  add_index "kgg_attributes", ["name"], name: "index_kgg_attributes_on_name", using: :btree
-  add_index "kgg_attributes", ["shortname"], name: "index_kgg_attributes_on_shortname", unique: true, using: :btree
+  add_index "kgg_attributes", ["datatype"], name: "idx_kgga_datatype", using: :btree
+  add_index "kgg_attributes", ["description"], name: "idx_kgga_description", using: :btree
+  add_index "kgg_attributes", ["format"], name: "idx_kgga_format", using: :btree
+  add_index "kgg_attributes", ["name"], name: "idx_kgga_name", using: :btree
+  add_index "kgg_attributes", ["shortname"], name: "idx_kgga_shortname", unique: true, using: :btree
+  add_index "kgg_attributes", ["units"], name: "idx_kgga_units", using: :btree
+
+  create_table "kgg_files", force: :cascade do |t|
+    t.string   "shortname"
+    t.string   "name"
+    t.text     "description"
+    t.string   "media_file_name"
+    t.string   "media_content_type"
+    t.integer  "media_file_size"
+    t.datetime "media_updated_at"
+    t.string   "original_filename"
+    t.string   "filetype"
+    t.string   "version"
+    t.text     "url"
+    t.text     "note"
+    t.jsonb    "exif",               default: {}, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "kgg_files", ["description"], name: "idx_kggf_description", using: :btree
+  add_index "kgg_files", ["exif"], name: "idx_kggf_exif", using: :gin
+  add_index "kgg_files", ["filetype"], name: "idx_kggf_filetype", using: :btree
+  add_index "kgg_files", ["media_content_type"], name: "idx_kggf_media_content_type", using: :btree
+  add_index "kgg_files", ["media_file_name"], name: "idx_kggf_media_file_name", using: :btree
+  add_index "kgg_files", ["media_file_size"], name: "idx_kggf_media_file_size", using: :btree
+  add_index "kgg_files", ["media_updated_at"], name: "idx_kggf_media_updated_at", using: :btree
+  add_index "kgg_files", ["name"], name: "idx_kggf_name", using: :btree
+  add_index "kgg_files", ["original_filename"], name: "idx_kggf_original_filename", using: :btree
+  add_index "kgg_files", ["shortname"], name: "idx_kggf_shortname", using: :btree
+  add_index "kgg_files", ["url"], name: "idx_kggf_url", using: :btree
+  add_index "kgg_files", ["version"], name: "idx_kggf_version", using: :btree
 
   create_table "kgg_groupings", force: :cascade do |t|
     t.string "shortname",                null: false
@@ -85,10 +74,53 @@ ActiveRecord::Schema.define(version: 20130923212809) do
     t.jsonb  "attributes",  default: {}, null: false
   end
 
-  add_index "kgg_groupings", ["attributes"], name: "index_kgg_groupings_on_attributes", using: :gin
-  add_index "kgg_groupings", ["groupings"], name: "index_kgg_groupings_on_groupings", using: :gin
-  add_index "kgg_groupings", ["name"], name: "index_kgg_groupings_on_name", using: :btree
-  add_index "kgg_groupings", ["shortname"], name: "index_kgg_groupings_on_shortname", unique: true, using: :btree
+  add_index "kgg_groupings", ["attributes"], name: "idx_kggg_attributes", using: :gin
+  add_index "kgg_groupings", ["description"], name: "idx_kggg_description", using: :btree
+  add_index "kgg_groupings", ["groupings"], name: "idx_kggg_groupings", using: :gin
+  add_index "kgg_groupings", ["name"], name: "idx_kggg_name", using: :btree
+  add_index "kgg_groupings", ["shortname"], name: "idx_kggg_shortname", unique: true, using: :btree
+
+  create_table "kgg_object_types", force: :cascade do |t|
+    t.string   "shortname"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "grouping_ids",  array: true
+    t.integer  "attribute_ids", array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "kgg_object_types", ["attribute_ids"], name: "idx_kggot_attribute_ids", using: :gin
+  add_index "kgg_object_types", ["description"], name: "idx_kggot_description", using: :btree
+  add_index "kgg_object_types", ["grouping_ids"], name: "idx_kggot_grouping_ids", using: :gin
+  add_index "kgg_object_types", ["name"], name: "idx_kggot_name", using: :btree
+  add_index "kgg_object_types", ["shortname"], name: "idx_kggot_shortname", using: :btree
+
+  create_table "kgg_objects", force: :cascade do |t|
+    t.integer  "object_type_id",                    null: false
+    t.string   "shortname"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "file_id"
+    t.integer  "author_id"
+    t.text     "note"
+    t.jsonb    "groupings",            default: {}, null: false
+    t.jsonb    "attributes",           default: {}, null: false
+    t.integer  "secondary_file_ids",                             array: true
+    t.integer  "secondary_author_ids",                           array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "kgg_objects", ["attributes"], name: "idx_kggo_attributes", using: :gin
+  add_index "kgg_objects", ["author_id"], name: "idx_kggo_author_id", using: :btree
+  add_index "kgg_objects", ["description"], name: "idx_kggo_description", using: :btree
+  add_index "kgg_objects", ["file_id"], name: "idx_kggo_file_id", using: :btree
+  add_index "kgg_objects", ["groupings"], name: "idx_kggo_groupings", using: :gin
+  add_index "kgg_objects", ["name"], name: "idx_kggo_name", using: :btree
+  add_index "kgg_objects", ["secondary_author_ids"], name: "idx_kggo_secondary_author_ids", using: :gin
+  add_index "kgg_objects", ["secondary_file_ids"], name: "idx_kggo_secondary_file_ids", using: :gin
+  add_index "kgg_objects", ["shortname"], name: "idx_kggo_shortname", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -149,4 +181,7 @@ ActiveRecord::Schema.define(version: 20130923212809) do
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  add_foreign_key "kgg_objects", "kgg_files", column: "file_id", name: "fk_kggo_files"
+  add_foreign_key "kgg_objects", "kgg_object_types", column: "object_type_id", name: "fk_kggo_object_types"
+  add_foreign_key "kgg_objects", "users", column: "author_id", name: "fk_kggo_authors"
 end
